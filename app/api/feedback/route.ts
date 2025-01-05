@@ -2,14 +2,16 @@ import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const fromEmail = process.env.RESEND_FROM_EMAIL || 'contact@swifttools.eu';
+const toEmail = process.env.RESEND_TO_EMAIL || 'dgxiong2000@msn.com';
 
 export async function POST(request: Request) {
   try {
-    const { title, content } = await request.json();
+    const { title, content, name, email } = await request.json();
 
-    if (!title || !content) {
+    if (!title || !content || !name || !email) {
       return NextResponse.json(
-        { error: 'Title and content are required' },
+        { error: 'All fields are required' },
         { status: 400 }
       );
     }
@@ -35,6 +37,10 @@ export async function POST(request: Request) {
               <p>A new feedback has been submitted through Swift Tools.</p>
             </div>
             <div class="content">
+              <h3>User Information:</h3>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              
               <h3>Feedback Details:</h3>
               <p><strong>Title:</strong> ${title}</p>
               <p><strong>Content:</strong></p>
@@ -50,11 +56,11 @@ export async function POST(request: Request) {
     `;
 
     const data = await resend.emails.send({
-      from: 'Swift Tools <contact@swifttools.eu>',
-      to: ['dgxiong2000@msn.com'],
+      from: `Swift Tools <${fromEmail}>`,
+      to: [toEmail],
       subject: `Swift Tools Feedback: ${title}`,
       html: emailTemplate,
-      replyTo: 'contact@swifttools.eu',
+      replyTo: email,
     });
 
     return NextResponse.json({ 

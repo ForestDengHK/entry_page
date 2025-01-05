@@ -12,6 +12,8 @@ export function FeedbackForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
@@ -19,6 +21,8 @@ export function FeedbackForm() {
   const resetForm = () => {
     setTitle('');
     setContent('');
+    setName('');
+    setEmail('');
     setIsSuccess(false);
     setIsOpen(false);
   };
@@ -34,7 +38,7 @@ export function FeedbackForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ title, content, name, email }),
       });
 
       const data = await response.json();
@@ -98,6 +102,33 @@ export function FeedbackForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-sm font-medium">
+                    Name
+                  </label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    disabled={isSubmitting}
+                    placeholder="Your name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-medium">
+                    Email
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={isSubmitting}
+                    placeholder="Your email address"
+                  />
+                </div>
                 <div className="space-y-2">
                   <label htmlFor="title" className="text-sm font-medium">
                     Title
