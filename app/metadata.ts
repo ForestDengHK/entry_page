@@ -1,4 +1,6 @@
-export const defaultMetadata = {
+import type { Metadata } from 'next';
+
+export const defaultMetadata: Metadata = {
   title: 'Swift Tools - Developer Tools Collection',
   description: 'A curated collection of self-developed and recommended developer tools to enhance your workflow. Find and discover utilities for markdown editing, file conversion, and media downloads.',
   openGraph: {
@@ -49,7 +51,6 @@ export const defaultMetadata = {
   creator: 'Forest Deng',
   publisher: 'Swift Tools',
   applicationName: 'Swift Tools',
-  referrer: 'origin',
   keywords: [
     'developer tools',
     'markdown editor',
