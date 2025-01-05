@@ -49,7 +49,7 @@ export const defaultMetadata = {
   creator: 'Forest Deng',
   publisher: 'Swift Tools',
   applicationName: 'Swift Tools',
-  referrer: 'origin-when-cross-origin',
+  referrer: 'origin',
   keywords: [
     'developer tools',
     'markdown editor',
