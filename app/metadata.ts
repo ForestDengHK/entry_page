@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 
 export const defaultMetadata: Metadata = {
   title: 'Swift Tools - Developer Tools Collection',
-  description: 'A curated collection of self-developed and recommended developer tools to enhance your workflow. Find and discover utilities for markdown editing, file conversion, and media downloads.',
+  description: 'A curated collection of self-developed and recommended tools to enhance your workflow. Find and discover utilities for markdown editing, file conversion, and media downloads. More tools are coming soon.',
   openGraph: {
     title: 'Swift Tools - Developer Tools Collection',
-    description: 'A curated collection of self-developed and recommended developer tools to enhance your workflow. Find and discover utilities for markdown editing, file conversion, and media downloads.',
+    description: 'A curated collection of self-developed and recommended tools to enhance your workflow. Find and discover utilities for markdown editing, file conversion, and media downloads. More tools are coming soon.',
     type: 'website',
     locale: 'en_US',
     url: 'https://www.swifttools.eu',

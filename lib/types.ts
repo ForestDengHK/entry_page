@@ -21,7 +21,7 @@ export const tools: Tool[] = [
     url: 'http://mdconvert.swifttools.eu',
     type: 'self_dev',
     language: 'Python',
-    description: 'Converts files in other formats to markdown.',
+    description: 'Converts files in other formats (PDF, DOCX, XML, etc.) to markdown.',
     purpose: 'Enable easy conversion to markdown from various file types.',
   },
   {
@@ -29,7 +29,7 @@ export const tools: Tool[] = [
     url: 'https://cobalt.tools/',
     type: 'external',
     language: 'Unknown',
-    description: 'Download media from social platforms.',
-    purpose: 'Easy media content downloading.',
+    description: 'Download videos, audios from social platforms (TikTok, Instagram, X, YouTube etc.).',
+    purpose: 'Easy video and audio downloading.',
   },
 ];

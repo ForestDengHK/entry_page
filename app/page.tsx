@@ -31,7 +31,7 @@ export default function Home() {
               <h1 className="text-3xl font-bold tracking-tight">Swift Tools</h1>
             </div>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              A curated collection of self-developed and recommended developer tools to enhance your workflow.
+              A curated collection of self-developed and recommended tools to enhance your workflow.
             </p>
           </div>
 

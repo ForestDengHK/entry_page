@@ -1,32 +1,66 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { MessageCircle, X, Loader2, CheckCircle2 } from 'lucide-react';
 
 export function FeedbackForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+
+  const resetForm = () => {
+    setTitle('');
+    setContent('');
+    setIsSuccess(false);
+    setIsOpen(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // In a real implementation, you would send this to your email service
-    // For now, we'll just show a success message
-    toast({
-      title: 'Feedback Sent',
-      description: 'Thank you for your feedback!',
-    });
-    
-    setTitle('');
-    setContent('');
-    setIsOpen(false);
+    setIsSubmitting(true);
+    setIsSuccess(false);
+
+    try {
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, content }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send feedback');
+      }
+
+      setIsSuccess(true);
+      toast({
+        title: 'Success!',
+        description: 'Thank you for your feedback! We will get back to you soon.',
+      });
+
+      // Close the form after 2 seconds
+      setTimeout(resetForm, 2000);
+    } catch (error: any) {
+      console.error('Feedback error:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to send feedback. Please try again later.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -44,38 +78,69 @@ export function FeedbackForm() {
           <Card className="w-full max-w-md p-6">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold">Send Feedback</h2>
-              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={resetForm}
+                disabled={isSubmitting}
+              >
                 <X className="h-4 w-4" />
               </Button>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="title" className="text-sm font-medium">
-                  Title
-                </label>
-                <Input
-                  id="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                />
+
+            {isSuccess ? (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <CheckCircle2 className="mb-4 h-12 w-12 text-green-500" />
+                <h3 className="mb-2 text-xl font-semibold">Thank You!</h3>
+                <p className="text-muted-foreground">
+                  Your feedback has been sent successfully.
+                </p>
               </div>
-              <div className="space-y-2">
-                <label htmlFor="content" className="text-sm font-medium">
-                  Feedback
-                </label>
-                <Textarea
-                  id="content"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  required
-                  rows={4}
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Submit Feedback
-              </Button>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <label htmlFor="title" className="text-sm font-medium">
+                    Title
+                  </label>
+                  <Input
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    disabled={isSubmitting}
+                    placeholder="Brief summary of your feedback"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="content" className="text-sm font-medium">
+                    Feedback
+                  </label>
+                  <Textarea
+                    id="content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    required
+                    disabled={isSubmitting}
+                    rows={4}
+                    placeholder="Tell us what you think..."
+                  />
+                </div>
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    'Submit Feedback'
+                  )}
+                </Button>
+              </form>
+            )}
           </Card>
         </div>
       )}
