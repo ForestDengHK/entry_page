@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { defaultMetadata } from './metadata';
 import { Analytics } from '@vercel/analytics/react';
-
+import { SocialLinks } from '@/components/social-links';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -48,6 +48,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         {children}
+        <SocialLinks />
         <Analytics />
       </body>
     </html>

@@ -71,7 +71,7 @@ export function FeedbackForm() {
     <>
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 rounded-full shadow-lg"
+        className="rounded-full shadow-lg"
         size="icon"
       >
         <MessageCircle className="h-5 w-5" />
