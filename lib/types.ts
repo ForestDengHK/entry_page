@@ -25,7 +25,6 @@ export const tools: Tool[] = [
     language: 'Python',
     description: 'An online editor for creating markdown documents with export functionality.',
     purpose: 'Simplify markdown document creation and export.',
-    featured: true,
   },
   {
     name: 'Markdown Convert Tool',
