@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Tool, tools } from '@/lib/types';
 import { Search } from '@/components/ui/search';
 import { ToolCard } from '@/components/tool-card';
-import { FeedbackForm } from '@/components/feedback-form';
 import { Footer } from '@/components/footer';
 import { Wrench } from 'lucide-react';
 
@@ -53,7 +52,6 @@ export default function Home() {
         </div>
       </main>
       <Footer />
-      <FeedbackForm />
     </div>
   );
 }
